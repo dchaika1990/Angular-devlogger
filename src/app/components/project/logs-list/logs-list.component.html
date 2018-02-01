@@ -1,0 +1,9 @@
+<ul class="list-group mt-5">
+  <li class="list-group-item d-flex justify-content-between align-content-center"
+    *ngFor="let log of logs"
+  >
+      <span>{{ log.text }}t</span>
+      <span class="log-date ml-auto mr-5">{{ log.date }}</span>
+      <i class="fa fa-remove"></i>
+  </li>
+</ul>

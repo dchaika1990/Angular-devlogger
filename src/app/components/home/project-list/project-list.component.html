@@ -1,0 +1,10 @@
+<ul class="list-group mt-5">
+  <li class="list-group-item d-flex justify-content-between align-content-center"
+    *ngFor="let project of projects"
+  >
+    <div class="align-items-center">
+      <a href="" routerLink="/project/{{ project.projectId }}">{{ project.name }}</a>
+      <span class="badge badge-primary badge-pill ml-2">{{ project.logs.length }}</span>
+    </div>
+  </li>
+</ul>
