@@ -3,11 +3,15 @@
     Add log
   </div>
   <div class="card-body">
-    <form>
+    <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="text" class="form-control">
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="text"
+               name="text"
+        >
       </div>
-      <button type="submit" class="btn btn-primary">Add log</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!text">Add log</button>
     </form>
   </div>
 </div>

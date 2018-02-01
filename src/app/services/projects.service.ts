@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { of } from "rxjs/observable/of";
 
 // Models
 import { Log } from "../modules/Log";
 import { Project } from "../modules/project";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class ProjectsService {
@@ -12,47 +14,14 @@ export class ProjectsService {
 
   constructor() {
 
-    this.projects = [
-      {
-        projectId: '1',
-        name: 'Easycode',
-        logs: [
-          {
-            id: '1',
-            text: 'Added components',
-            date: '20.01.2018 15:21:12'
-          },
-          {
-            id: '2',
-            text: 'Added services',
-            date: '20.01.2018 15:32:12'
-          },
-          {
-            id: '3',
-            text: 'Added module',
-            date: '20.01.2018 15:42:12'
-          }
-        ]
-      },
-      {
-        projectId: '200',
-        name: 'Amazon',
-        logs: [
-          {
-            id: '1',
-            text: 'Added http',
-            date: '20.01.2018 15:21:12'
-          }
-        ]
-      }
-    ]
+    this.projects = JSON.parse(localStorage.getItem('projects')) || [];
   }
 
-  getAllProject(){
-    return this.projects;
+  getAllProjects(): Observable<Project[]> {
+    return of(this.projects);
   }
 
-  getProject(id){
+  getProject(id): Observable<Project> {
 
     this.projects.forEach( (current, i) =>{
       if( current.projectId === id ){
@@ -60,12 +29,27 @@ export class ProjectsService {
       }
     } );
 
-    return this.selectedProject;
+    return of(this.selectedProject);
 
   }
 
-  addProject( project ){
-    this.projects.unshift(project)
+  addProject( project ) {
+    this.projects.unshift(project);
+    localStorage.setItem('projects', JSON.stringify(this.projects))
+  }
+
+  addLog(log: Log, projectId) {
+
+    this.projects.forEach( project => {
+      if ( project.projectId === projectId ) {
+        console.log(project);
+        project.logs.unshift(log)
+      }
+    } );
+
+    // Add to LS
+    localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
   }
 
 }

@@ -17,7 +17,7 @@ export class LogsListComponent implements OnInit {
   @Input() currentRouteId: string;
 
   constructor(
-    public ProjectsService: ProjectsService
+    public projectsService: ProjectsService
   ) { }
 
   ngOnInit() {

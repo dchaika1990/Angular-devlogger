@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 
 //App components
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { LogFormComponent } from './components/project/log-form/log-form.compone
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 //Services
-import {ProjectsService} from "./services/projects.service";
+import { ProjectsService } from "./services/projects.service";
 import { UuidService } from "./services/uuid.service";
 
 

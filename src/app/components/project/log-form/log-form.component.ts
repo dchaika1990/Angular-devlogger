@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+
+//Services
+import { ProjectsService } from "../../../services/projects.service";
+import { UuidService } from "../../../services/uuid.service";
 
 @Component({
   selector: 'app-log-form',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogFormComponent implements OnInit {
 
-  constructor() { }
+  id: string;
+  text: string;
+  date: string;
+
+  @Input() currentRouteId: string;
+
+  constructor(
+    public projectsService: ProjectsService,
+    public uuid: UuidService
+  ) { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    const newLog = {
+      id: this.uuid.generate(),
+      text: this.text,
+      date: (new Date()).toLocaleString()
+    };
+
+    this.projectsService.addLog(newLog, this.currentRouteId)
+
   }
 
 }
