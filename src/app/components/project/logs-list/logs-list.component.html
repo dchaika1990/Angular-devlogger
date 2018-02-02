@@ -1,9 +1,11 @@
 <ul class="list-group mt-5">
   <li class="list-group-item d-flex justify-content-between align-content-center"
     *ngFor="let log of logs; let i = index"
+    (click)="onSelect(log)"
+      [ngClass]="{'list-group-item-secondary' : selectedLog === log}"
   >
       <span>{{ log.text }}</span>
       <span class="log-date ml-auto mr-5">{{ log.date }}</span>
-      <button class="btn btn-default" (click)="removeLog(log, i)"><i class="fa fa-remove"></i></button>
+      <button class="btn btn-default" (click)="removeLog( i )"><i class="fa fa-remove"></i></button>
   </li>
 </ul>

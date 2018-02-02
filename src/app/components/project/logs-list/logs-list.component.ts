@@ -15,16 +15,32 @@ export class LogsListComponent implements OnInit {
 
   @Input() logs: Log[];
   @Input() currentRouteId: string;
+  selectedLog: Log;
 
   constructor(
     public projectsService: ProjectsService
   ) { }
 
   ngOnInit() {
+    this.projectsService.selectedLog.subscribe( log => {
+      console.log(log);
+      if ( log.id === null ){
+        this.selectedLog = {
+          id: '',
+          text: '',
+          date: ''
+        }
+      }
+    } )
   }
 
   removeLog(log: Log, i) {
-    this.projectsService.removeLog(log, i, this.currentRouteId)
+    this.projectsService.removeLog(i, this.currentRouteId)
+  }
+
+  onSelect(log: Log) {
+    this.projectsService.setFormLog(log);
+    this.selectedLog = log;
   }
 
 }

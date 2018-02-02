@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of } from "rxjs/observable/of";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 // Models
 import { Log } from "../modules/Log";
@@ -11,6 +12,13 @@ export class ProjectsService {
 
   projects: Project[];
   selectedProject: Project;
+
+  private logSource = new BehaviorSubject<Log>({
+    id: null,
+    text: null,
+    date: null
+  });
+  selectedLog = this.logSource.asObservable();
 
   constructor() {
 
@@ -52,7 +60,30 @@ export class ProjectsService {
 
   }
 
-  removeLog(log: Log, i, projectId) {
+  updateLog(log: Log, projectId) {
+
+    this.projects.forEach( project => {
+      // search project by projectId
+      if ( project.projectId === projectId ) {
+        // search log by log.id
+        project.logs.forEach( (value, i) => {
+          if ( value.id === log.id ) {
+            // delete old log
+            project.logs.splice( i, 1 )
+          }
+        } );
+        // add update log
+        project.logs.unshift(log)
+
+      }
+    } );
+
+    // Add to LS
+    localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+  }
+
+  removeLog(i, projectId) {
 
     this.projects.forEach( project => {
       if ( project.projectId === projectId ) {
@@ -65,13 +96,25 @@ export class ProjectsService {
 
   }
 
-  removeProject(project: Project, i) {
+  removeProject(i) {
 
     this.projects.splice( i, 1);
 
     // Add to LS
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
+  }
+
+  setFormLog(log: Log) {
+    this.logSource.next(log);
+  }
+
+  clearState() {
+    this.logSource.next({
+      id: null,
+      text: null,
+      date: null
+    })
   }
 
 }

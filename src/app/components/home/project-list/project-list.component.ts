@@ -24,8 +24,8 @@ export class ProjectListComponent implements OnInit {
 
   }
 
-  removeProject(project, i){
-    this.projectsServices.removeProject(project, i);
+  removeProject(i){
+    this.projectsServices.removeProject(i);
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="card bg-light">
   <div class="card-header">
-    Add log
+    {{ isNew ? 'Add log' : 'Update log' }}
   </div>
   <div class="card-body">
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -11,7 +11,8 @@
                name="text"
         >
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!text">Add log</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!text">{{ isNew ? 'Add log' : 'Update log' }}</button>
+      <button type="button" class="btn btn-warning" [hidden]="!text" (click)="clearState()">Clear</button>
     </form>
   </div>
 </div>

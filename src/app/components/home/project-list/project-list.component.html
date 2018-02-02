@@ -5,7 +5,7 @@
     <div class="align-items-center d-flex">
       <a href="" routerLink="/project/{{ project.projectId }}">{{ project.name }}</a>
       <span class="badge badge-primary badge-pill ml-2">{{ project.logs.length }}</span>
-      <button class="btn btn-default ml-auto" (click)="removeProject(project, i)"><i class="fa fa-remove"></i></button>
+      <button class="btn btn-default ml-auto" (click)="removeProject( i )"><i class="fa fa-remove"></i></button>
     </div>
   </li>
 </ul>
