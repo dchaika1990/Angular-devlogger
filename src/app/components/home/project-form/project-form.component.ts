@@ -25,12 +25,13 @@ export class ProjectFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(){
+  onSubmit(form){
     this.projectsService.addProject({
       projectId: this.uuid.generate(),
       name: this.projectName,
       logs: []
-    })
+    });
+    form.resetForm();
   }
 
 }

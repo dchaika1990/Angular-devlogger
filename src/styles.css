@@ -1,2 +1,11 @@
-
+.btn.btn-default{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0 5px;
+}
+.btn.btn-default:hover{
+  color: #fff;
+  background: rgba(229, 0, 0, 0.78);
+}
 

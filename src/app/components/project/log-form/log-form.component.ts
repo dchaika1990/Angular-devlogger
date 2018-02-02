@@ -25,14 +25,16 @@ export class LogFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  onSubmit(form) {
     const newLog = {
       id: this.uuid.generate(),
       text: this.text,
       date: (new Date()).toLocaleString()
     };
 
-    this.projectsService.addLog(newLog, this.currentRouteId)
+    this.projectsService.addLog(newLog, this.currentRouteId);
+
+    form.resetForm();
 
   }
 

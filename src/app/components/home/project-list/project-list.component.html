@@ -1,10 +1,11 @@
 <ul class="list-group mt-5">
-  <li class="list-group-item d-flex justify-content-between align-content-center"
-    *ngFor="let project of projects"
+  <li class="list-group-item"
+    *ngFor="let project of projects; let i = index"
   >
-    <div class="align-items-center">
+    <div class="align-items-center d-flex">
       <a href="" routerLink="/project/{{ project.projectId }}">{{ project.name }}</a>
       <span class="badge badge-primary badge-pill ml-2">{{ project.logs.length }}</span>
+      <button class="btn btn-default ml-auto" (click)="removeProject(project, i)"><i class="fa fa-remove"></i></button>
     </div>
   </li>
 </ul>

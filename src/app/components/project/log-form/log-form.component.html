@@ -3,7 +3,7 @@
     Add log
   </div>
   <div class="card-body">
-    <form (ngSubmit)="onSubmit()">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
       <div class="form-group">
         <input type="text"
                class="form-control"

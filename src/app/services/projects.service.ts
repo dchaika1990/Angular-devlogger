@@ -52,4 +52,26 @@ export class ProjectsService {
 
   }
 
+  removeLog(log: Log, i, projectId) {
+
+    this.projects.forEach( project => {
+      if ( project.projectId === projectId ) {
+        project.logs.splice( i, 1 );
+      }
+    });
+
+    // Add to LS
+    localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+  }
+
+  removeProject(project: Project, i) {
+
+    this.projects.splice( i, 1);
+
+    // Add to LS
+    localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+  }
+
 }
