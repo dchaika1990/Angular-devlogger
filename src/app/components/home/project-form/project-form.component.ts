@@ -15,7 +15,11 @@ import { Project } from "../../../modules/project";
 })
 export class ProjectFormComponent implements OnInit {
 
-  projectName: string;
+  isNew: boolean = true;
+
+  projectId: string;
+  name: string;
+  logs: Log[];
 
   constructor(
     public projectsService: ProjectsService,
@@ -23,15 +27,55 @@ export class ProjectFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    // подписываемся на выбор проекта
+    this.projectsService.selectedListProject.subscribe( project => {
+      if ( project.projectId !== null ){
+        this.isNew = false;
+        this.projectId = project.projectId;
+        this.name = project.name;
+        this.logs = project.logs;
+        console.log(project.projectId);
+      }
+    } )
+
   }
 
   onSubmit(form){
-    this.projectsService.addProject({
-      projectId: this.uuid.generate(),
-      name: this.projectName,
-      logs: []
-    });
-    form.resetForm();
+
+    if ( this.isNew ){
+
+      const newProject = {
+        projectId: this.uuid.generate(),
+        name: this.name,
+        logs: []
+      };
+      this.projectsService.addProject(newProject);
+      form.resetForm();
+
+
+    } else {
+
+      const updProject = {
+        projectId: this.projectId,
+        name: this.name,
+        logs: this.logs
+      };
+      this.projectsService.updateProject(updProject)
+
+    }
+
+    this.clearState();
+
+  }
+
+  clearState(){
+    this.isNew = true;
+    this.projectId = '';
+    this.name = '';
+    this.logs = [];
+
+    this.projectsService.clearStateProject()
   }
 
 }

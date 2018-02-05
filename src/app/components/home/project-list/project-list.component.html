@@ -1,11 +1,15 @@
 <ul class="list-group mt-5">
   <li class="list-group-item"
     *ngFor="let project of projects; let i = index"
+
+    [ngClass]="{'list-group-item-secondary' : selectedProject === project}"
   >
     <div class="align-items-center d-flex">
       <a href="" routerLink="/project/{{ project.projectId }}">{{ project.name }}</a>
       <span class="badge badge-primary badge-pill ml-2">{{ project.logs.length }}</span>
-      <button class="btn btn-default ml-auto" (click)="removeProject( i )"><i class="fa fa-remove"></i></button>
+      <button class="btn btn-default ml-auto mr-2 background-primary-hover" (click)="onSelect(project)"><i class="fa fa-edit"></i></button>
+      <button class="btn btn-default " (click)="removeProject( project.projectId )"><i class="fa fa-remove"></i></button>
+
     </div>
   </li>
 </ul>

@@ -12,6 +12,7 @@ export class ProjectsService {
 
   projects: Project[];
   selectedProject: Project;
+  text: string;
 
   private logSource = new BehaviorSubject<Log>({
     id: null,
@@ -19,6 +20,19 @@ export class ProjectsService {
     date: null
   });
   selectedLog = this.logSource.asObservable();
+
+  private projectSource = new BehaviorSubject<Project>({
+    projectId: null,
+    name: null,
+    logs: null
+  });
+  selectedListProject = this.projectSource.asObservable();
+
+  private stateSource = new BehaviorSubject<Boolean>(true);
+  stateClear = this.stateSource.asObservable();
+
+  private alertSource = new BehaviorSubject<String>(null);
+  alertText = this.alertSource.asObservable();
 
   constructor() {
 
@@ -41,9 +55,13 @@ export class ProjectsService {
 
   }
 
-  addProject( project ) {
+  addProject( project: Project ) {
     this.projects.unshift(project);
-    localStorage.setItem('projects', JSON.stringify(this.projects))
+    localStorage.setItem('projects', JSON.stringify(this.projects));
+
+    //Alert
+    this.text = 'Added project success';
+    this.setAlertText(this.text);
   }
 
   addLog(log: Log, projectId) {
@@ -57,6 +75,10 @@ export class ProjectsService {
 
     // Add to LS
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+    //Alert
+    this.text = 'Added log success';
+    this.setAlertText(this.text);
 
   }
 
@@ -81,6 +103,32 @@ export class ProjectsService {
     // Add to LS
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
+    //Alert
+    this.text = 'Updated log success';
+    this.setAlertText(this.text);
+
+  }
+
+  updateProject(project: Project) {
+
+    this.projects.forEach( (projectSelect, i) => {
+      // search project by projectId
+      if ( project.projectId === projectSelect.projectId ){
+        // delete old project
+        this.projects.splice(i, 1);
+        // add update log
+        this.projects.unshift(project)
+      }
+
+    });
+
+    // Add to LS
+    localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+    //Alert
+    this.text = 'Updated project success';
+    this.setAlertText(this.text);
+
   }
 
   removeLog(i, projectId) {
@@ -94,14 +142,27 @@ export class ProjectsService {
     // Add to LS
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
+    //Alert
+    this.text = 'Deleted log success';
+    this.setAlertText(this.text);
+
   }
 
-  removeProject(i) {
+  removeProject(projectId){
 
-    this.projects.splice( i, 1);
+    this.projects.forEach( (projectSelect, i) => {
+      if ( projectId === projectSelect.projectId ){
+        this.projects.splice( i, 1);
+      }
+
+    } );
 
     // Add to LS
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
+
+    //Alert
+    this.text = 'Deleted project success';
+    this.setAlertText(this.text);
 
   }
 
@@ -109,12 +170,47 @@ export class ProjectsService {
     this.logSource.next(log);
   }
 
-  clearState() {
+  setFormProject(project: Project) {
+    this.projectSource.next(project);
+  }
+
+  setAlertText(text: string){
+    this.alertSource.next(text);
+  }
+
+  clearStateLog() {
     this.logSource.next({
       id: null,
       text: null,
       date: null
-    })
+    });
+
+    //Alert
+    this.text = 'Form has been clean';
+    this.setAlertText(this.text);
+  }
+
+  clearStateProject() {
+
+    this.stateSource.next(true);
+
+    this.projectSource.next({
+      projectId: null,
+      name: null,
+      logs: null
+    });
+
+    //Alert
+    this.text = 'Form has been clean';
+    this.setAlertText(this.text);
+  }
+
+  clearStateAlert() {
+    this.alertSource.next(null);
+    //
+    // //Alert
+    // this.text = 'Form has been clean';
+    // this.setAlertText(this.text);
   }
 
 }

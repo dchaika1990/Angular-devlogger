@@ -74,7 +74,7 @@ export class LogFormComponent implements OnInit {
     this.text = '';
     this.date = '';
 
-    this.projectsService.clearState();
+    this.projectsService.clearStateLog();
   }
 
 }

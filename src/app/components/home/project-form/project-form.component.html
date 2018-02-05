@@ -1,6 +1,6 @@
 <div class="card bg-light">
   <div class="card-header">
-    Add new project
+    {{ isNew ? "Add new project" : "Update project" }}
   </div>
   <div class="card-body">
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -8,12 +8,13 @@
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="projectName"
-          name="projectName"
+          [(ngModel)]="name"
+          name="name"
           required
         >
       </div>
-      <button [disabled]="!projectName" type="submit" class="btn btn-primary">Add project</button>
+      <button [disabled]="!name" type="submit" class="btn btn-primary">{{ isNew ? "Add new project" : "Update project" }}</button>
+      <button *ngIf="name" type="button" class="btn btn-warning" (click)="clearState()">Clear</button>
     </form>
   </div>
 </div>

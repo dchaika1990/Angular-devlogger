@@ -1,11 +1,16 @@
 .btn.btn-default{
-  background-color: transparent;
   border: none;
   outline: none;
-  padding: 0 5px;
+  padding: 2px 8px;
+  color: #000;
+  background-color: transparent;
 }
+
 .btn.btn-default:hover{
-  color: #fff;
   background: rgba(229, 0, 0, 0.78);
+  color: #fff;
+}
+.btn.btn-default.background-primary-hover:hover{
+  background: rgba(72, 96, 229, 0.78);
 }
 

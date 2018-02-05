@@ -15,17 +15,31 @@ import { Project } from "../../../modules/project";
 export class ProjectListComponent implements OnInit {
 
   @Input('projects') projects: Project[];
+  selectedProject: Project;
 
   constructor(
     public projectsServices: ProjectsService
   ) { }
 
   ngOnInit() {
-
+    this.projectsServices.stateClear.subscribe( clearState => {
+      if ( clearState ){
+        this.selectedProject = {
+          projectId: '',
+          name: '',
+          logs: []
+        }
+      }
+    } )
   }
 
-  removeProject(i){
-    this.projectsServices.removeProject(i);
+  removeProject(projectId){
+    this.projectsServices.removeProject(projectId)
+  }
+
+  onSelect( project: Project ){
+    this.projectsServices.setFormProject(project);
+    this.selectedProject = project;
   }
 
 }
