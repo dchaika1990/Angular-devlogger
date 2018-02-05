@@ -184,10 +184,6 @@ export class ProjectsService {
       text: null,
       date: null
     });
-
-    //Alert
-    this.text = 'Form has been clean';
-    this.setAlertText(this.text);
   }
 
   clearStateProject() {
@@ -199,18 +195,11 @@ export class ProjectsService {
       name: null,
       logs: null
     });
-
-    //Alert
-    this.text = 'Form has been clean';
-    this.setAlertText(this.text);
   }
 
   clearStateAlert() {
     this.alertSource.next(null);
-    //
-    // //Alert
-    // this.text = 'Form has been clean';
-    // this.setAlertText(this.text);
+
   }
 
 }
