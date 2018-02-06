@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectsService} from "../../services/projects.service";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-alert',
@@ -11,11 +12,12 @@ export class AlertComponent implements OnInit {
   text: String = '';
 
   constructor(
-    public projectsService: ProjectsService
+    public projectsService: ProjectsService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    this.projectsService.alertText.subscribe( text => {
+    this.alertService.alertText.subscribe( text => {
       this.text = text;
 
       setTimeout(()=>{
@@ -28,7 +30,7 @@ export class AlertComponent implements OnInit {
   clearState(){
     this.text = '';
 
-    this.projectsService.clearStateAlert();
+    this.alertService.clearStateAlert();
   }
 
 }

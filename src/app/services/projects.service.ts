@@ -7,12 +7,14 @@ import { Log } from "../modules/Log";
 import { Project } from "../modules/project";
 import {Observable} from "rxjs/Observable";
 
+//Services
+import { AlertService } from "./alert.service";
+
 @Injectable()
 export class ProjectsService {
 
   projects: Project[];
   selectedProject: Project;
-  text: string;
 
   private logSource = new BehaviorSubject<Log>({
     id: null,
@@ -31,11 +33,9 @@ export class ProjectsService {
   private stateSource = new BehaviorSubject<Boolean>(true);
   stateClear = this.stateSource.asObservable();
 
-  private alertSource = new BehaviorSubject<String>(null);
-  alertText = this.alertSource.asObservable();
-
-  constructor() {
-
+  constructor(
+    private alertService: AlertService
+  ) {
     this.projects = JSON.parse(localStorage.getItem('projects')) || [];
   }
 
@@ -60,8 +60,7 @@ export class ProjectsService {
     localStorage.setItem('projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Added project success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Added project success');
   }
 
   addLog(log: Log, projectId) {
@@ -77,8 +76,7 @@ export class ProjectsService {
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Added log success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Added log success');
 
   }
 
@@ -104,8 +102,7 @@ export class ProjectsService {
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Updated log success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Updated log success');
 
   }
 
@@ -126,8 +123,7 @@ export class ProjectsService {
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Updated project success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Updated project success');
 
   }
 
@@ -143,8 +139,7 @@ export class ProjectsService {
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Deleted log success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Deleted log success');
 
   }
 
@@ -161,8 +156,7 @@ export class ProjectsService {
     localStorage.setItem( 'projects', JSON.stringify(this.projects));
 
     //Alert
-    this.text = 'Deleted project success';
-    this.setAlertText(this.text);
+    this.alertService.setAlertText('Deleted project success');
 
   }
 
@@ -172,10 +166,6 @@ export class ProjectsService {
 
   setFormProject(project: Project) {
     this.projectSource.next(project);
-  }
-
-  setAlertText(text: string){
-    this.alertSource.next(text);
   }
 
   clearStateLog() {
@@ -197,9 +187,6 @@ export class ProjectsService {
     });
   }
 
-  clearStateAlert() {
-    this.alertSource.next(null);
 
-  }
 
 }

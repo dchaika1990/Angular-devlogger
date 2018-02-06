@@ -13,6 +13,7 @@ import { ProjectFormComponent } from './components/home/project-form/project-for
 import { ProjectListComponent } from './components/home/project-list/project-list.component';
 import { LogsListComponent } from './components/project/logs-list/logs-list.component';
 import { LogFormComponent } from './components/project/log-form/log-form.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 //App routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -20,7 +21,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 //Services
 import { ProjectsService } from "./services/projects.service";
 import { UuidService } from "./services/uuid.service";
-import { AlertComponent } from './components/alert/alert.component';
+import { AlertService } from "./services/alert.service";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { AlertComponent } from './components/alert/alert.component';
   ],
   providers: [
     ProjectsService,
-    UuidService
+    UuidService,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })
